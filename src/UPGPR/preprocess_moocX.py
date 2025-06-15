@@ -211,7 +211,7 @@ def save_all_relations(save_dir:str,
     # save course-video relations
     print("Saving course-video relations")
     for idx in dataframes["course-video"].index:
-        v = dataframes["course-video"].concept.iloc[idx]
+        v = dataframes["course-video"].video.iloc[idx]
         c = dataframes["course-video"].course.iloc[idx]
         course_to_videos[c] = course_to_videos.get(c, []) + [v]
 
@@ -230,7 +230,7 @@ def save_all_relations(save_dir:str,
     # save course-exercise relations
     print("Saving course-exercise relations")
     for idx in dataframes["course-exercise"].index: 
-        e = dataframes["course-exercise"].concept.iloc[idx]
+        e = dataframes["course-exercise"].exercise.iloc[idx]
         c = dataframes["course-exercise"].course.iloc[idx]
         course_to_exercises[c] = course_to_concepts.get(c, []) + [e]
   
