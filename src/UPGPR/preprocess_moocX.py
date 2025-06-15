@@ -161,7 +161,9 @@ def save_all_relations(save_dir:str,
 
     out = []
     for course in entities["courses"]:
-        out.append(str(entities_to_idx["schools"][course_to_school[course]]))
+        ss= course_to_school.get(course, [])
+        ss= [str(entities_to_idx["schools"][s]) for s in ss]
+        out.append(" ".join(ss))
 
     file_name = os.path.join(save_dir, "course_school.txt")
     with open(file_name, "w", encoding="utf-8") as f:
