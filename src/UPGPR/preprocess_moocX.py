@@ -222,7 +222,7 @@ def save_all_relations(save_dir:str,
         vs = [str(entities_to_idx["video"][v]) for v in vs]
         out.append(" ".join(vs))
     
-    file_name = os.path.join(save_dir, "course_video.txt")
+    file_name = os.path.join(save_dir, "course_videos.txt")
     with open(file_name, "w", encoding="utf-8") as f:
         out = "\n".join(out)
         f.write(out)
@@ -240,7 +240,7 @@ def save_all_relations(save_dir:str,
         es = course_to_exercises.get(course, [])
         es = [str(entities_to_idx["exercise"][e]) for e in es]
         out.append(" ".join(es))
-    file_name = os.path.join(save_dir, "course_exercise.txt")
+    file_name = os.path.join(save_dir, "course_exercises.txt")
     with open(file_name, "w", encoding="utf-8") as f:
         out = "\n".join(out)
         f.write(out)
@@ -257,7 +257,7 @@ def save_all_relations(save_dir:str,
         fs = course_to_fields.get(course, [])
         fs = [str(entities_to_idx["field"][f]) for f in fs]
         out.append(" ".join(fs))
-    file_name = os.path.join(save_dir, "course_field.txt")
+    file_name = os.path.join(save_dir, "course_fields.txt")
     with open(file_name, "w", encoding="utf-8") as f:  
         out = "\n".join(out)
         f.write(out)
