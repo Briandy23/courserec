@@ -218,7 +218,7 @@ def save_all_relations(save_dir:str,
 
     out = []
     for course in entities["courses"]:
-        vs = course_to_concepts.get(course, [])
+        vs = course_to_videos.get(course, [])
         vs = [str(entities_to_idx["video"][v]) for v in vs]
         out.append(" ".join(vs))
     
@@ -232,12 +232,12 @@ def save_all_relations(save_dir:str,
     for idx in dataframes["course-exercise"].index: 
         e = dataframes["course-exercise"].exercise.iloc[idx]
         c = dataframes["course-exercise"].course.iloc[idx]
-        course_to_exercises[c] = course_to_concepts.get(c, []) + [e]
+        course_to_exercises[c] = course_to_exercises.get(c, []) + [e]
   
 
     out = []
     for course in entities["courses"]:
-        es = course_to_concepts.get(course, [])
+        es = course_to_exercises.get(course, [])
         es = [str(entities_to_idx["exercise"][e]) for e in es]
         out.append(" ".join(es))
     file_name = os.path.join(save_dir, "course_exercise.txt")
@@ -250,11 +250,11 @@ def save_all_relations(save_dir:str,
     for idx in dataframes["course-field"].index:
         f = dataframes["course-field"].field.iloc[idx]
         c = dataframes["course-field"].course.iloc[idx]
-        course_to_fields[c] = course_to_concepts.get(c, []) + [f]
+        course_to_fields[c] = course_to_fields.get(c, []) + [f]
     
     out = []
     for course in entities["courses"]:
-        fs = course_to_concepts.get(course, [])
+        fs = course_to_fields.get(course, [])
         fs = [str(entities_to_idx["field"][f]) for f in fs]
         out.append(" ".join(fs))
     file_name = os.path.join(save_dir, "course_field.txt")
