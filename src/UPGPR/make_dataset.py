@@ -15,7 +15,7 @@ from knowledge_graph import KnowledgeGraph
 from easydict import EasyDict as edict
 
 
-def generate_labels(data_dir, filename):
+def generate_labels(data_dir:str, filename:str)-> dict:
     enrolment_file = f"{data_dir}/{filename}"
     user_courses = {}  # {uid: [cid,...], ...}
     with open(enrolment_file, "r", encoding="utf-8") as f:
@@ -30,39 +30,39 @@ def generate_labels(data_dir, filename):
     return user_courses
 
 
-def split_train_test_data_by_user(
-    data_dir, ratio=0.8, ratio_validation=0.5, data_file="enrolments.txt"
+def split_train_test_data_by_user_by_time(
+    data_dir, data_file="enrolments.txt"
 ):
-    # path = data_dir + "/" + data_file
-    # with open(path, "rb") as f:
-    #     learner_courses = pickle.load(f)
     learner_courses = generate_labels(data_dir, data_file)
     train_data = []
     test_data = []
     validation_data = []
+
     for learner in learner_courses:
+        # Mỗi learner sẽ có danh sách các khóa học dạng (course_id, timestamp)
         courses = learner_courses[learner]
-        l_train_data, l_validation_test_data = train_test_split(
-            courses, train_size=ratio
-        )
-        l_validation_data, l_test_data = train_test_split(
-            l_validation_test_data, train_size=ratio_validation
-        )
 
+        # Sắp xếp theo thời gian tăng dần (giả sử tuple (course_id, timestamp))
+
+
+        # Chia tập
+        l_train_data = courses[:-2]  # Tất cả trừ 2 khóa học cuối
+        l_validation_data = [courses[-2]]  # Khóa học gần nhất
+        l_test_data = [courses[-1]]  # Khóa học cuối cùng
+
+        # Lưu vào danh sách kết quả
         for c in l_train_data:
-            train_data.append(f"{learner} {c}\n")
+            train_data.append(f"{learner} {c[0]}\n")  # c[0] là course_id
         for c in l_validation_data:
-            validation_data.append(f"{learner} {c}\n")
+            validation_data.append(f"{learner} {c[0]}\n")
         for c in l_test_data:
-            test_data.append(f"{learner} {c}\n")
+            test_data.append(f"{learner} {c[0]}\n")
 
-    random.shuffle(train_data)
-    random.shuffle(test_data)
-    random.shuffle(validation_data)
 
     create_data_file(data_dir, train_data, "train.txt")
     create_data_file(data_dir, validation_data, "validation.txt")
     create_data_file(data_dir, test_data, "test.txt")
+
 
 
 def main():
@@ -89,10 +89,8 @@ def main():
     # split_train_test_data(args.dataset, ratio=args.ratio, ratio_validation=args.ratio_validation, data_file=args.data_file)
 
     print(args)
-    split_train_test_data_by_user(
+    split_train_test_data_by_user_by_time(
         args.data_dir,
-        ratio=args.ratio,
-        ratio_validation=args.ratio_validation,
         data_file=args.data_file,
     )
     # Create MoocDataset instance for dataset.
