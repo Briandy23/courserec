@@ -52,11 +52,11 @@ def split_train_test_data_by_user_by_time(
 
         # Lưu vào danh sách kết quả
         for c in l_train_data:
-            train_data.append(f"{learner} {c[0]}\n")  # c[0] là course_id
+            train_data.append(f"{learner} {c}\n")
         for c in l_validation_data:
-            validation_data.append(f"{learner} {c[0]}\n")
+            validation_data.append(f"{learner} {c}\n")
         for c in l_test_data:
-            test_data.append(f"{learner} {c[0]}\n")
+            test_data.append(f"{learner} {c}\n")
 
 
     create_data_file(data_dir, train_data, "train.txt")
