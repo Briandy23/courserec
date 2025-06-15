@@ -5,7 +5,7 @@ import pickle
 import pandas as pd
 
 
-def read_relations(dataset:pd.DataFrame, column_names):
+def read_relations(dataset:pd.DataFrame, column_names:list[str]) -> pd.DataFrame:
     if column_names[0] == "user":
         df = dataset[[column_names[0]+"_id", column_names[1]+"_id"]].copy()
         df.columns = column_names
@@ -26,7 +26,7 @@ def read_relations(dataset:pd.DataFrame, column_names):
         raise ValueError(f"Unknown relation type: {column_names[0]}-{column_names[1]}")
 
 
-def read_all_relations(dataset, relations, min_concept_count):
+def read_all_relations(dataset:str, relations:list[str], min_concept_count:int) -> dict[str, pd.DataFrame]:
     dataframes = {}
     print(f"Reading relations from {dataset}")
     # Read the combined dataframe
@@ -48,7 +48,7 @@ def read_all_relations(dataset, relations, min_concept_count):
     return dataframes
 
 
-def get_enrolments(dataframes, min_user_count):
+def get_enrolments(dataframes:dict[str,pd.DataFrame], min_user_count:int) -> pd.DataFrame:
     print(f"Removing users enrolled in less than {min_user_count} courses")
     enrolments = dataframes["user-course"][
         dataframes["user-course"].course.isin(dataframes["course-school"].course)
@@ -59,7 +59,7 @@ def get_enrolments(dataframes, min_user_count):
     return enrolments
 
 
-def get_all_entities(dataframes, enrolments):
+def get_all_entities(dataframes:dict[str,pd.DataFrame], enrolments:pd.DataFrame) -> dict[str, pd.Series]:
     print(f"Extracting entities")
     entities = {}
     entities["users"] = enrolments.user.unique()
@@ -93,7 +93,8 @@ def save_entity(entity, file_name):
         f.write(out)
 
 
-def save_entities(save_dir, entities):
+def save_entities(save_dir:str, entities:dict[str,pd.Series]) -> None:
+    print("Saving entities")
     for entity in entities:
         file_name = os.path.join(save_dir, f"{entity}.txt")
         save_entity(entities[entity], file_name)
@@ -106,14 +107,18 @@ def get_entity_to_idx(entity):
     return entity_to_idx
 
 
-def get_all_entities_to_idx(entities):
+def get_all_entities_to_idx(entities:dict[str,pd.Series]) -> dict[str, dict]:
+    print("Creating entity to index mappings")
     entities_to_idx = {}
     for entity in entities:
         entities_to_idx[entity] = get_entity_to_idx(entities[entity])
+
     return entities_to_idx
 
 
-def save_enrolments(save_dir, enrolments, entities_to_idx):
+def save_enrolments(save_dir:str, 
+                    enrolments:pd.DataFrame, 
+                    entities_to_idx:dict) -> None:
     # enr_by_user = {}
     print("Saving enrolments")
     out = []
@@ -135,7 +140,10 @@ def save_enrolments(save_dir, enrolments, entities_to_idx):
     #     pickle.dump(enr_by_user, f)
 
 
-def save_all_relations(save_dir, dataframes, entities, entities_to_idx):
+def save_all_relations(save_dir:str, 
+                       dataframes:dict[str,pd.DataFrame], 
+                       entities:dict[str,pd.Series], 
+                       entities_to_idx:dict[str, dict]) -> None:
     course_to_school = {}
     course_to_teachers = {}
     course_to_concepts = {}
@@ -146,8 +154,8 @@ def save_all_relations(save_dir, dataframes, entities, entities_to_idx):
     # save course-school relations
     print("Saving course-school relations")
     for idx in dataframes["course-school"].index:
-        s = dataframes["course-school"].school[idx]
-        c = dataframes["course-school"].course[idx]
+        s = dataframes["course-school"].school.iloc[idx]
+        c = dataframes["course-school"].course.iloc[idx]
         course_to_school[c] = s
 
     out = []
@@ -162,8 +170,8 @@ def save_all_relations(save_dir, dataframes, entities, entities_to_idx):
     # save course-teacher relations
     print("Saving course-teacher relations")
     for idx in dataframes["course-teacher"].index:
-        t = dataframes["course-teacher"].teacher[idx]
-        c = dataframes["course-teacher"].course[idx]
+        t = dataframes["course-teacher"].teacher.iloc[idx]
+        c = dataframes["course-teacher"].course.iloc[idx]
         t = t.replace(" ", "_")
         course_to_teachers[c] = course_to_teachers.get(c, []) + [t]
 
@@ -181,8 +189,8 @@ def save_all_relations(save_dir, dataframes, entities, entities_to_idx):
     # save course-concept relations
     print("Saving course-concept relations")
     for idx in dataframes["course-concept"].index:
-        k = dataframes["course-concept"].concept[idx]
-        c = dataframes["course-concept"].course[idx]
+        k = dataframes["course-concept"].concept.iloc[idx]
+        c = dataframes["course-concept"].course.iloc[idx]
         course_to_concepts[c] = course_to_concepts.get(c, []) + [k]
 
     out = []
@@ -200,8 +208,8 @@ def save_all_relations(save_dir, dataframes, entities, entities_to_idx):
     # save course-video relations
     print("Saving course-video relations")
     for idx in dataframes["course-video"].index:
-        v = dataframes["course-video"].concept[idx]
-        c = dataframes["course-video"].course[idx]
+        v = dataframes["course-video"].concept.iloc[idx]
+        c = dataframes["course-video"].course.iloc[idx]
         course_to_videos = course_to_concepts.get(c, [])
         course_to_videos.append(v)
 
@@ -219,8 +227,8 @@ def save_all_relations(save_dir, dataframes, entities, entities_to_idx):
     # save course-exercise relations
     print("Saving course-exercise relations")
     for idx in dataframes["course-exercise"].index: 
-        e = dataframes["course-exercise"].concept[idx]
-        c = dataframes["course-exercise"].course[idx]
+        e = dataframes["course-exercise"].concept.iloc[idx]
+        c = dataframes["course-exercise"].course.iloc[idx]
         course_to_exercises = course_to_concepts.get(c, [])
         course_to_exercises.append(e)
 
@@ -237,8 +245,8 @@ def save_all_relations(save_dir, dataframes, entities, entities_to_idx):
     # save course-field relations
     print("Saving course-field relations")
     for idx in dataframes["course-field"].index:
-        f = dataframes["course-field"].field[idx]
-        c = dataframes["course-field"].course[idx]
+        f = dataframes["course-field"].field.iloc[idx]
+        c = dataframes["course-field"].course.iloc[idx]
         course_to_fields = course_to_concepts.get(c, [])
         course_to_fields.append(f)
     
