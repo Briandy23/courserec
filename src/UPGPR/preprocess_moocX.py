@@ -12,7 +12,7 @@ def read_relations(dataset:pd.DataFrame, column_names):
         return df
     elif column_names[0] == "course":
         new_column_names = []
-        course_df = dataset.filter(regex="^(course|concept|video|exercise|school|teacher)").groupby("course").first().reset_index()
+        course_df = dataset.filter(regex="^(course|concept|video|exercise|school|teacher)").groupby("course_id").first().reset_index()
         if column_names[1]== "video":
             new_column_names = [f"{column_names[0]}_id", f"{column_names[1]}_ccid"]
         elif column_names[1] == "field":
