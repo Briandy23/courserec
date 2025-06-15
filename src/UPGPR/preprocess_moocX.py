@@ -156,6 +156,8 @@ def save_all_relations(save_dir:str,
     for idx in dataframes["course-school"].index:
         s = dataframes["course-school"].school.iloc[idx]
         c = dataframes["course-school"].course.iloc[idx]
+        if c=="C_948415":
+            print(f" {c} : {s}")
         course_to_school[c] = s
 
     out = []
@@ -210,8 +212,8 @@ def save_all_relations(save_dir:str,
     for idx in dataframes["course-video"].index:
         v = dataframes["course-video"].concept.iloc[idx]
         c = dataframes["course-video"].course.iloc[idx]
-        course_to_videos = course_to_concepts.get(c, [])
-        course_to_videos.append(v)
+        course_to_videos[c] = course_to_videos.get(c, []) + [v]
+
 
     out = []
     for course in entities["courses"]:
@@ -229,8 +231,8 @@ def save_all_relations(save_dir:str,
     for idx in dataframes["course-exercise"].index: 
         e = dataframes["course-exercise"].concept.iloc[idx]
         c = dataframes["course-exercise"].course.iloc[idx]
-        course_to_exercises = course_to_concepts.get(c, [])
-        course_to_exercises.append(e)
+        course_to_exercises[c] = course_to_concepts.get(c, []) + [e]
+  
 
     out = []
     for course in entities["courses"]:
@@ -247,8 +249,7 @@ def save_all_relations(save_dir:str,
     for idx in dataframes["course-field"].index:
         f = dataframes["course-field"].field.iloc[idx]
         c = dataframes["course-field"].course.iloc[idx]
-        course_to_fields = course_to_concepts.get(c, [])
-        course_to_fields.append(f)
+        course_to_fields[c] = course_to_concepts.get(c, []) + [f]
     
     out = []
     for course in entities["courses"]:
