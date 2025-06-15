@@ -19,7 +19,7 @@ def read_relations(dataset:pd.DataFrame, column_names):
             new_column_names = [f"{column_names[0]}_id", f"course_{column_names[1]}"]
         else:
             new_column_names = [f"{column_names[0]}_id", f"{column_names[1]}_id"]
-        df = course_df[new_column_names].explode(new_column_names[1]).drop_duplicates().copy()
+        df = course_df[new_column_names].explode(new_column_names[1]).drop_duplicates().dropna().copy()
         df.columns = column_names
         return df
     else:
