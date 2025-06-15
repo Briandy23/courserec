@@ -87,14 +87,14 @@ def get_all_entities(dataframes, enrolments):
 
 
 def save_entity(entity, file_name):
+    print(f"Saving {file_name}")
     with open(file_name, "w", encoding="utf-8") as f:
         out = "\n".join(entity)
         f.write(out)
 
 
 def save_entities(save_dir, entities):
-    print(list(entities.keys()))
-    for entity in list(entities.keys()):
+    for entity in entities:
         file_name = os.path.join(save_dir, f"{entity}.txt")
         save_entity(entities[entity], file_name)
 
