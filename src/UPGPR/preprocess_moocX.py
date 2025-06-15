@@ -157,7 +157,6 @@ def save_all_relations(save_dir:str,
     for idx in dataframes["course-school"].index:
         s = dataframes["course-school"].school.iloc[idx]
         c = dataframes["course-school"].course.iloc[idx]
-        print(f" {c} : {s}")
         course_to_school[c] = course_to_school.get(c, []) + [s]
 
     out = []
