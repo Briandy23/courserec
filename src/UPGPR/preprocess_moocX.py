@@ -76,9 +76,9 @@ def get_all_entities(dataframes:dict[str,pd.DataFrame], enrolments:pd.DataFrame)
     ].school.unique()
 
     entities["concepts"] = dataframes["course-concept"].concept.unique()
-    entities["video"] = dataframes["course-video"].video.unique()
-    entities["exercise"] = dataframes["course-exercise"].exercise.unique()
-    entities["field"] = dataframes["course-field"].field.unique()
+    entities["videos"] = dataframes["course-video"].video.unique()
+    entities["exercises"] = dataframes["course-exercise"].exercise.unique()
+    entities["fields"] = dataframes["course-field"].field.unique()
 
     for entity in entities:
         print(f"Number of {entity}: {len(entities[entity])}")
