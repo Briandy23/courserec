@@ -1,6 +1,6 @@
 {
     "PREPROCESS": {
-        "data_dir": "data/moocx",
+        "data_dir": "/kaggle/working/sample/data/moocx",
         "tmp_dir": "tmp/moocx",
         "seed": 23,
         "ratio": 0.8,
