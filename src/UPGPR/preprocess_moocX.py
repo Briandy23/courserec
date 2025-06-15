@@ -175,7 +175,7 @@ def save_all_relations(save_dir:str,
     for idx in dataframes["course-teacher"].index:
         t = dataframes["course-teacher"].teacher.iloc[idx]
         c = dataframes["course-teacher"].course.iloc[idx]
-        t = t.replace(" ", "_")
+        # t = t.replace(" ", "_")
         course_to_teachers[c] = course_to_teachers.get(c, []) + [t]
 
     out = []
