@@ -93,7 +93,8 @@ def save_entity(entity, file_name):
 
 
 def save_entities(save_dir, entities):
-    for entity in entities:
+    print(list(entities.keys()))
+    for entity in list(entities.keys()):
         file_name = os.path.join(save_dir, f"{entity}.txt")
         save_entity(entities[entity], file_name)
 
