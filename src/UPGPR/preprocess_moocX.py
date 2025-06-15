@@ -111,6 +111,7 @@ def get_all_entities_to_idx(entities:dict[str,pd.Series]) -> dict[str, dict]:
     print("Creating entity to index mappings")
     entities_to_idx = {}
     for entity in entities:
+        print(f"Creating mapping for {entity} with {len(entities[entity])} entities")
         entities_to_idx[entity] = get_entity_to_idx(entities[entity])
 
     return entities_to_idx
