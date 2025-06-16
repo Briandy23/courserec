@@ -214,9 +214,6 @@ def save_all_relations(save_dir:str,
         c = dataframes["course-video"].course.iloc[idx]
         course_to_videos[c] = course_to_videos.get(c, []) + [v]
 
-    print(f"Number of courses: {len(entities['courses'])}")
-    print(f"Sample course_to_videos: {list(course_to_videos.items())[:5]}")
-
     out = []
     for course in entities["courses"]:
         vs = course_to_videos.get(course, [])
@@ -227,8 +224,6 @@ def save_all_relations(save_dir:str,
     with open(file_name, "w", encoding="utf-8") as f:
         out = "\n".join(out)
         f.write(out)
-
-    print(f"File {file_name} saved successfully with {len(out.splitlines())} lines.")
 
     # save course-exercise relations
     print("Saving course-exercise relations")
