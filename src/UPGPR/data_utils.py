@@ -1,6 +1,5 @@
 from __future__ import absolute_import, division, print_function
 
-import logging
 import numpy as np
 from easydict import EasyDict as edict
 import random
@@ -151,20 +150,9 @@ class DataLoader(object):
         user_idx, item_idx = self.dataset.interactions.data[interaction_idx]
         item_features = {}
 
-        print(f"item_idx: {item_idx}")
-        for cr in self.item_relations:
-            data = getattr(self.dataset, cr).data
-            print(f"{cr} data size: {len(data)}")
-            if item_idx >= len(data):
-                print(f"Error: item_idx {item_idx} out of range for {cr} with size {len(data)}")
-
-        item_knowledge = {}
-        for cr in self.item_relations:
-            data = getattr(self.dataset, cr).data
-            if item_idx < len(data):
-                item_knowledge[cr] = data[item_idx]
-            else:
-                item_knowledge[cr] = []  # Gán danh sách rỗng nếu item_idx vượt quá kích thước
+        item_knowledge = {
+            cr: getattr(self.dataset, cr).data[item_idx] for cr in self.item_relations
+        }
 
         if self.use_user_relations == True:
             learner_info = {
@@ -211,6 +199,15 @@ class DataLoader(object):
                 break
             interaction_idx = self.interaction_seq[self.cur_interaction_i]
             user_idx, item_idx = self.dataset.interactions.data[interaction_idx]
+            valid = True
+            for cr in self.item_relations:
+                data_list = getattr(self.dataset, cr).data
+                if item_idx >= len(data_list):
+                    print(f"Warning: item_idx {item_idx} out of range for {cr} with size {len(data_list)}")
+                    valid = False
+                    break
+            if not valid:
+                continue 
             item_knowledge = {
                 cr: getattr(self.dataset, cr).data[item_idx]
                 for cr in self.item_relations
