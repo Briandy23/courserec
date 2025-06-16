@@ -195,7 +195,7 @@
     },
     "TRAIN_EMBEDS": {
         "data_dir": "data/moocx",
-        "tmp_dir": "tmp/mooc",
+        "tmp_dir": "tmp/moocx",
         "name": "train_transe_model",
         "seed": 23,
         "gpu": "0",
