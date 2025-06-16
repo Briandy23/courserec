@@ -6,6 +6,7 @@ from math import log
 import wandb
 from collections import Counter
 import argparse
+from math import log
 from tqdm import tqdm
 from easydict import EasyDict as edict
 import torch
@@ -199,7 +200,8 @@ def evaluate(
 def evaluate_neg_sampling(
     topk_matches,
     test_user_products,
-    all_items,
+    train_user_products,
+    validation_user_products,
     use_wandb,
     tmp_dir,
     result_file_dir,
@@ -215,6 +217,10 @@ def evaluate_neg_sampling(
         num_neg: number of negative samples (default: 100).
         Ks: list of K values to evaluate.
     """
+    all_items=get_all_items(
+        train_user_products, 
+        test_user_products, 
+        validation_user_products)
     invalid_users = []
     metrics = {k: {'precisions': [], 'recalls': [], 'ndcgs': [], 'hits': [], 
                    'hits_at_1': [], 'hits_at_3': [], 'maps': [], 'f1_scores': []} 
@@ -518,7 +524,7 @@ def evaluate_paths(
     path_file,
     train_labels,
     test_labels,
-    all_courses,
+    validation_labels,
     kg_args,
     use_wandb,
     result_file_dir,
@@ -614,6 +620,7 @@ def evaluate_paths(
         # 3) Compute top 10 recommended products for each user.
         sort_by = "score"
         pred_labels = {}
+        pred_full_rankings = {}
         for uid in best_pred_paths:
             if sort_by == "score":
                 sorted_path = sorted(
@@ -627,9 +634,14 @@ def evaluate_paths(
                 p[-1][2] for _, _, p in sorted_path[:10]
             ]  # from largest to smallest
 
+            all_pids = [
+                p[-1][2] for _, _, p in sorted_path
+            ]  
+
             pred_labels[uid] = top10_pids[
                 ::-1
             ]  # change order to from smallest to largest!
+            pred_full_rankings[uid] = all_pids[::-1]
 
         if validation == True:
             return evaluate_validation(pred_labels, test_labels)
@@ -649,9 +661,10 @@ def evaluate_paths(
                         Ks=[5, 10],
                     )
                     evaluate_neg_sampling(
-                        pred_labels,
+                        pred_full_rankings,
                         test_labels,
-                        all_courses,
+                        train_labels,
+                        validation_labels,
                         use_wandb,
                         args.tmp_dir,
                         result_file_dir=result_file_dir,
@@ -679,7 +692,7 @@ def test(args, kg_args):
             path_file,
             train_labels,
             test_labels,
-            all_courses,
+            validation_labels,
             kg_args,
             args.use_wandb,
             args.result_file_dir,
