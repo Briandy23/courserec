@@ -227,7 +227,7 @@ class DataLoader(object):
             for cr in self.item_relations:
                 data_list = getattr(self.dataset, cr).data
                 if item_idx >= len(data_list):
-                    print(f"Warning: item_idx {item_idx} out of range for {cr} with size {len(data_list)}")
+                    # print(f"Warning: item_idx {item_idx} out of range for {cr} with size {len(data_list)}")
                     valid = False
             if not valid:
                 continue 
