@@ -146,13 +146,33 @@ class DataLoader(object):
         (user_id, item_id, ...item_features, ...user_features, ...entity_features).
         """
         batch = []
+
+        while self.cur_interaction_i < self.interactions_size:
+            interaction_idx = self.interaction_seq[self.cur_interaction_i]
+            user_idx, item_idx = self.dataset.interactions.data[interaction_idx]
+
+        # Kiểm tra item_idx hợp lệ với tất cả item_relations
+            valid = True
+            for cr in self.item_relations:
+                data_list = getattr(self.dataset, cr).data
+                if item_idx >= len(data_list):
+                    print(f"Warning: item_idx {item_idx} out of range for {cr} with size {len(data_list)}")
+                    valid = False
+                    break
+
+            if valid:
+                break
+            else:
+                self.cur_interaction_i += 1
+
+        if self.cur_interaction_i >= self.interactions_size:
+            self._has_next = False
+            return np.array(batch)
+
         interaction_idx = self.interaction_seq[self.cur_interaction_i]
         user_idx, item_idx = self.dataset.interactions.data[interaction_idx]
         item_features = {}
         # item_idx = item_idx-1
-        for cr in self.item_relations:
-            data_list = getattr(self.dataset, cr).data
-            print(f"Item_idx {item_idx} out of range for {cr} with size {len(data_list)}")
 
         item_knowledge = {
             cr: getattr(self.dataset, cr).data[item_idx] for cr in self.item_relations
