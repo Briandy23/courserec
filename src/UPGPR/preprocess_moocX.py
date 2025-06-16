@@ -50,7 +50,9 @@ def read_all_relations(dataset:str, relations:list[str], min_concept_count:int) 
 
 def get_enrolments(dataframes:dict[str,pd.DataFrame], min_user_count:int) -> pd.DataFrame:
     print(f"Removing users enrolled in less than {min_user_count} courses")
-    enrolments = dataframes["user-course"]
+    enrolments = dataframes["user-course"][
+        dataframes["user-course"].course.isin(dataframes["course-school"].course)
+    ]
     enrolments = enrolments[
         enrolments.groupby("user")["user"].transform("size") >= min_user_count
     ]
