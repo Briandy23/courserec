@@ -50,9 +50,7 @@ def read_all_relations(dataset:str, relations:list[str], min_concept_count:int) 
 
 def get_enrolments(dataframes:dict[str,pd.DataFrame], min_user_count:int) -> pd.DataFrame:
     print(f"Removing users enrolled in less than {min_user_count} courses")
-    enrolments = dataframes["user-course"][
-        dataframes["user-course"].course.isin(dataframes["course-school"].course)
-    ]
+    enrolments = dataframes["user-course"]
     enrolments = enrolments[
         enrolments.groupby("user")["user"].transform("size") >= min_user_count
     ]
@@ -75,10 +73,18 @@ def get_all_entities(dataframes:dict[str,pd.DataFrame], enrolments:pd.DataFrame)
         dataframes["course-school"].course.isin(entities["courses"])
     ].school.unique()
 
-    entities["concepts"] = dataframes["course-concept"].concept.unique()
-    entities["videos"] = dataframes["course-video"].video.unique()
-    entities["exercises"] = dataframes["course-exercise"].exercise.unique()
-    entities["fields"] = dataframes["course-field"].field.unique()
+    entities["concepts"] = dataframes["course-concept"][
+        dataframes["course-concept"].course.isin(entities["courses"])
+    ].concept.unique()
+    entities["videos"] = dataframes["course-video"][
+        dataframes["course-video"].course.isin(entities["courses"])
+    ].video.unique()
+    entities["exercises"] = dataframes["course-exercise"][
+        dataframes["course-exercise"].course.isin(entities["courses"])
+    ].exercise.unique()
+    entities["fields"] = dataframes["course-field"][
+        dataframes["course-field"].course.isin(entities["courses"])
+    ].field.unique()
 
     for entity in entities:
         print(f"Number of {entity}: {len(entities[entity])}")
