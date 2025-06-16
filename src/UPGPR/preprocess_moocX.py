@@ -9,8 +9,6 @@ def read_relations(dataset:pd.DataFrame, column_names:list[str]) -> pd.DataFrame
     if column_names[0] == "user":
         df = dataset[[column_names[0]+"_id", column_names[1]+"_id"]].copy()
         df.columns = column_names
-        print("n_user:",df.user.nunique())
-        print("n_course:",df.course.nunique())
         return df
     elif column_names[0] == "course":
         new_column_names = []
@@ -76,15 +74,9 @@ def get_all_entities(dataframes:dict[str,pd.DataFrame], enrolments:pd.DataFrame)
     ].school.unique()
 
     entities["concepts"] = dataframes["course-concept"].concept.unique()
-    entities["videos"] = dataframes["course-video"][
-        dataframes["course-video"].course.isin(entities["courses"])
-    ].video.unique()
-    entities["exercises"] = dataframes["course-exercise"][
-        dataframes["course-exercise"].course.isin(entities["courses"])
-    ].exercise.unique()
-    entities["fields"] = dataframes["course-field"][
-        dataframes["course-field"].course.isin(entities["courses"])
-    ].field.unique()
+    entities["videos"] = dataframes["course-video"].video.unique()
+    entities["exercises"] = dataframes["course-exercise"].exercise.unique()
+    entities["fields"] = dataframes["course-field"].field.unique()
 
     for entity in entities:
         print(f"Number of {entity}: {len(entities[entity])}")

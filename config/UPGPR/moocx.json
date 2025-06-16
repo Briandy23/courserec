@@ -197,6 +197,24 @@
                     "item"
                 ],
                 [
+                    "item_exercise",
+                    "exercise"
+                ],
+                [
+                    "item_exercise",
+                    "item"
+                ]
+            ],
+            "7": [
+                [
+                    null,
+                    "user"
+                ],
+                [
+                    "enroll",
+                    "item"
+                ],
+                [
                     "item_field",
                     "field"
                 ],
