@@ -234,7 +234,7 @@
         "epochs": 30,
         "min_epochs": 29,
         "batch_size": 32,
-        "lr": 1e-3,
+        "lr": 5e-4,
         "patience": 30,
         "use_user_relations": false,
         "use_entity_relations": false,
@@ -257,19 +257,19 @@
         "epochs": 50,
         "min_epochs": 49,
         "batch_size": 32,
-        "lr": 1e-3,
+        "lr": 5e-4,
         "patience": 10,
         "max_acts": 250,
-        "max_path_len": 3,
+        "max_path_len": 5,
         "gamma": 0.99,
-        "ent_weight": 1e-3,
+        "ent_weight": 1e-2,
         "act_dropout": 0.5,
         "state_history": 2,
         "hidden": [
             512,
             256
         ],
-        "use_pattern": false,
+        "use_pattern": true,
         "reward": "binary_train",
         "modified_policy": false,
         "sum_prob": false,
@@ -298,8 +298,8 @@
         "sum_prob": false,
         "topk": [
             25,
-            10,
-            5
+            5,
+            1
         ],
         "add_products": false,
         "run_path": true,
