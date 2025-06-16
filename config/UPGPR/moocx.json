@@ -168,29 +168,7 @@
                     "item_concept",
                     "item"
                 ]
-            ],
-            "5": [
-                [
-                    null,
-                    "user"
-                ],
-                [
-                    "enroll",
-                    "item"
-                ],
-                [
-                    "item_video",
-                    "video"
-                ],
-                [
-                    "item_exercise",
-                    "exercise"
-                ],
-                [
-                    "item_field",
-                    "field"
-                ]
-            ]
+            ] 
         }
     },
     "TRAIN_EMBEDS": {
