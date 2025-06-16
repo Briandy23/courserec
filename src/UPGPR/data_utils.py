@@ -1,5 +1,6 @@
 from __future__ import absolute_import, division, print_function
 
+import logging
 import numpy as np
 from easydict import EasyDict as edict
 import random
@@ -157,9 +158,13 @@ class DataLoader(object):
             if item_idx >= len(data):
                 print(f"Error: item_idx {item_idx} out of range for {cr} with size {len(data)}")
 
-        item_knowledge = {
-            cr: getattr(self.dataset, cr).data[item_idx] for cr in self.item_relations
-        }
+        item_knowledge = {}
+        for cr in self.item_relations:
+            data = getattr(self.dataset, cr).data
+            if item_idx < len(data):
+                item_knowledge[cr] = data[item_idx]
+            else:
+                item_knowledge[cr] = []  # Gán danh sách rỗng nếu item_idx vượt quá kích thước
 
         if self.use_user_relations == True:
             learner_info = {
