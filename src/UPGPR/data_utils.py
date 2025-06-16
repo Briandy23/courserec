@@ -150,6 +150,11 @@ class DataLoader(object):
         user_idx, item_idx = self.dataset.interactions.data[interaction_idx]
         item_features = {}
 
+        for cr in self.item_relations:
+            data_list = getattr(self.dataset, cr).data
+            if item_idx >= len(data_list):
+                print(f"Warning: item_idx {item_idx} out of range for {cr} with size {len(data_list)}")
+
         item_knowledge = {
             cr: getattr(self.dataset, cr).data[item_idx] for cr in self.item_relations
         }
