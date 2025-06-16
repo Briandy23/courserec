@@ -165,7 +165,61 @@
                     "school"
                 ],
                 [
-                    "item_concept",
+                    "item_school",
+                    "item"
+                ]
+            ],
+            "5": [
+                [
+                    null,
+                    "user"
+                ],
+                [
+                    "enroll",
+                    "item"
+                ],
+                [
+                    "item_video",
+                    "video"
+                ],
+                [
+                    "item_video",
+                    "item"
+                ]
+            ],
+            "6": [
+                [
+                    null,
+                    "user"
+                ],
+                [
+                    "enroll",
+                    "item"
+                ],
+                [
+                    "item_exercise",
+                    "exercise"
+                ],
+                [
+                    "item_exercise",
+                    "item"
+                ]
+            ],
+            "7": [
+                [
+                    null,
+                    "user"
+                ],
+                [
+                    "enroll",
+                    "item"
+                ],
+                [
+                    "item_field",
+                    "field"
+                ],
+                [
+                    "item_field",
                     "item"
                 ]
             ] 
@@ -253,7 +307,7 @@
         "use_wandb": false,
         "wandb_project_name": "project_name",
         "wandb_run_name": "run_name",
-        "result_file_dir": "/kaggle/working/sample/evaluation/UPGPR_max_len_3/",
+        "result_file_dir": "/kaggle/working/evaluation/UPGPR_max_len_3/",
         "result_file_name": "run_0.json",
         "early_stopping": false
     }
