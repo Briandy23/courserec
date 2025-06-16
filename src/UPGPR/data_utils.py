@@ -149,7 +149,7 @@ class DataLoader(object):
         interaction_idx = self.interaction_seq[self.cur_interaction_i]
         user_idx, item_idx = self.dataset.interactions.data[interaction_idx]
         item_features = {}
-
+        item_idx = item_idx-1
         for cr in self.item_relations:
             data_list = getattr(self.dataset, cr).data
             print(f"Item_idx {item_idx} out of range for {cr} with size {len(data_list)}")
