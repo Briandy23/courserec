@@ -1,10 +1,10 @@
+from __future__ import absolute_import, division, print_function
 import numpy as np
 import os
 import json
 from math import log
 import wandb
 from collections import Counter
-from __future__ import absolute_import, division, print_function
 import json
 from collections import Counter
 import os
