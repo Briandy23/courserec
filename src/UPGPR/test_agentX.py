@@ -246,11 +246,18 @@ def evaluate_neg_sampling(
         if len(rel_set) == 0:
             continue
         positive_item = np.random.choice(list(rel_set))  # Randomly select one positive
-        
+        # Get items the user has interacted with (train, val, test)
+        interacted_items = set(rel_set)  # Test items
+        if uid in train_user_products:
+            interacted_items.update(train_user_products[uid])  # Train items
+        if uid in validation_user_products:
+            interacted_items.update(validation_user_products[uid])  # Validation items
         # Sample negative items
+        available_negatives = [item for item in all_items if item not in interacted_items]
         negative_items = np.random.choice(
-            [item for item in all_items if item not in rel_set], 
-            size=num_neg, replace=False
+            available_negatives,
+            size=min(num_neg, len(available_negatives)),
+            replace=False
         ).tolist()
         
         # Combine positive and negative items
