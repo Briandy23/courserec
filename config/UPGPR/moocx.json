@@ -217,8 +217,8 @@
         "wandb_run_name": "200_epoch_embed"
     },
     "TRAIN_AGENT": {
-        "data_dir": "data/mooc/processed_files",
-        "tmp_dir": "tmp/mooc",
+        "data_dir": "data/moocx",
+        "tmp_dir": "tmp/moocx",
         "name": "train_agent",
         "seed": 23,
         "gpu": "0",
@@ -246,8 +246,8 @@
         "wandb_run_name": "run_name"
     },
     "TEST_AGENT": {
-        "data_dir": "data/mooc/processed_files",
-        "tmp_dir": "tmp/mooc",
+        "data_dir": "data/moocx",
+        "tmp_dir": "tmp/moocx",
         "name": "train_agent",
         "seed": 23,
         "gpu": "0",
