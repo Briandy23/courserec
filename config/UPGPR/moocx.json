@@ -266,8 +266,8 @@
         "sum_prob": false,
         "topk": [
             25,
-            5,
-            1
+            10,
+            5
         ],
         "add_products": false,
         "run_path": true,
