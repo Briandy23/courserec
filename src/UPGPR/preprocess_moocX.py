@@ -265,8 +265,8 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--dataset", type=str, default="/")
     parser.add_argument("--save_dir", type=str, default="/preprocessed_files")
-    parser.add_argument("--min_concept_count", type=int, default=10)
-    parser.add_argument("--min_user_count", type=int, default=10)
+    parser.add_argument("--min_concept_count", type=int, default=1)
+    parser.add_argument("--min_user_count", type=int, default=1)
 
     args = parser.parse_args()
 
