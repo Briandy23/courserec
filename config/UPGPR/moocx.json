@@ -1,7 +1,7 @@
 {
     "PREPROCESS": {
         "data_dir": "/kaggle/working/sample/data/moocx",
-        "tmp_dir": "tmp/moocx",
+        "tmp_dir": "/kaggle/working/tmp/moocx",
         "seed": 23,
         "ratio": 0.8,
         "ratio_validation": 0.5,
@@ -194,8 +194,8 @@
         }
     },
     "TRAIN_EMBEDS": {
-        "data_dir": "data/moocx",
-        "tmp_dir": "tmp/moocx",
+        "data_dir": "/kaggle/working/sample/data/moocx",
+        "tmp_dir": "/kaggle/working/tmp/moocx",
         "name": "train_transe_model",
         "seed": 23,
         "gpu": "0",
@@ -217,8 +217,8 @@
         "wandb_run_name": "200_epoch_embed"
     },
     "TRAIN_AGENT": {
-        "data_dir": "data/moocx",
-        "tmp_dir": "tmp/moocx",
+        "data_dir": "/kaggle/working/sample/data/moocx",
+        "tmp_dir": "/kaggle/working/tmp/moocx",
         "name": "train_agent",
         "seed": 23,
         "gpu": "0",
@@ -246,8 +246,8 @@
         "wandb_run_name": "run_name"
     },
     "TEST_AGENT": {
-        "data_dir": "data/moocx",
-        "tmp_dir": "tmp/moocx",
+        "data_dir": "/kaggle/working/sample/data/moocx",
+        "tmp_dir": "/kaggle/working/tmp/moocx",
         "name": "train_agent",
         "seed": 23,
         "gpu": "0",
@@ -275,7 +275,7 @@
         "use_wandb": false,
         "wandb_project_name": "project_name",
         "wandb_run_name": "run_name",
-        "result_file_dir": "evaluation/UPGPR_max_len_3/",
+        "result_file_dir": "/kaggle/working/sample/evaluation/UPGPR_max_len_3/",
         "result_file_name": "run_0.json",
         "early_stopping": false
     }
