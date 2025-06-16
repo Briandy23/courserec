@@ -9,6 +9,8 @@ def read_relations(dataset:pd.DataFrame, column_names:list[str]) -> pd.DataFrame
     if column_names[0] == "user":
         df = dataset[[column_names[0]+"_id", column_names[1]+"_id"]].copy()
         df.columns = column_names
+        print("n_user:",df.user.nunique())
+        print("n_course:",df.course.nunique())
         return df
     elif column_names[0] == "course":
         new_column_names = []
