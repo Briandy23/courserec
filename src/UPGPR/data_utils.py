@@ -205,7 +205,6 @@ class DataLoader(object):
                 if item_idx >= len(data_list):
                     print(f"Warning: item_idx {item_idx} out of range for {cr} with size {len(data_list)}")
                     valid = False
-                    break
             if not valid:
                 continue 
             item_knowledge = {
